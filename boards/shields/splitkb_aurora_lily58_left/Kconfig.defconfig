@@ -1,0 +1,19 @@
+if SHIELD_SPLITKB_AURORA_LILY58_LEFT
+
+config ZMK_KEYBOARD_NAME
+    default "Aurora Lily58"
+
+config ZMK_DISPLAY
+    default y
+
+endif # <--- Verifica che questo ci sia
+
+if SHIELD_SPLITKB_AURORA_LILY58_RIGHT
+
+config ZMK_KEYBOARD_NAME
+    default "Aurora Lily58"
+
+config ZMK_DISPLAY
+    default y
+
+endif # <--- E verifica che ci sia anche questo
