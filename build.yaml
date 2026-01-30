@@ -20,6 +20,6 @@
 ---
 include:
   - board: nice_nano
-    shield: splitkb_aurora_lily58_left
+    shield: sweep_central_dongle dongle_display
   - board: nice_nano
     shield: splitkb_aurora_lily58_right
