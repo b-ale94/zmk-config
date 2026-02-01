@@ -20,6 +20,6 @@
 ---
 include:
   - board: nice_nano
-    shield: splitkb_aurora_lily58_left
+    shield: splitkb_aurora_lily58_left nice_oled
   - board: nice_nano
-    shield: splitkb_aurora_lily58_right
+    shield: splitkb_aurora_lily58_right nice_oled
