@@ -17,6 +17,27 @@
             bindings = <&kp LC(LA(SPACE))>;
             label = "ONEPASS";
         };
+
+        desktop1: desktop1 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LCTRL &kp LEFT_GUI &kp NUMBER_1>;
+            label = "DESKTOP1";
+        };
+
+        desktop2: desktop2 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LCTRL &kp LEFT_GUI &kp NUMBER_2>;
+            label = "DESKTOP2";
+        };
+
+        desktop3: desktop3 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LCTRL &kp LEFT_GUI &kp NUMBER_3>;
+            label = "DESKTOP3";
+        };
     };
 
     keymap {
@@ -65,11 +86,21 @@
             //                     |      |      |      |        |  |       |      |       |       |
 
             bindings = <
-&trans     &kp LG(LA(NUMBER_1))  &kp LA(LG(NUMBER_2))  &kp LA(LG(NUMBER_3))  &trans   &trans                     &trans       &trans     &trans        &trans     &trans    &trans
-&kp GRAVE  &kp N1                &kp N2                &kp N3                &kp N4   &kp N5                     &kp N6       &kp N7     &kp UP_ARROW  &kp N9     &kp N0    &trans
-&kp F1     &kp F2                &kp F3                &kp F4                &kp F5   &kp F6                     &trans       &kp LEFT   &kp DOWN      &kp RIGHT  &trans    &trans
-&kp F7     &kp F8                &kp F9                &kp F10               &kp F11  &kp F12  &trans    &trans  &kp KP_PLUS  &kp MINUS  &kp EQUAL     &kp LBKT   &kp RBKT  &kp BSLH
-                                                       &trans                &trans   &trans   &trans    &trans  &trans       &trans     &trans
+&trans     &desktop1  &desktop2  &desktop3  &trans   &trans                     &trans       &trans     &trans        &trans     &trans    &trans
+&kp GRAVE  &kp N1     &kp N2     &kp N3     &kp N4   &kp N5                     &kp N6       &kp N7     &kp UP_ARROW  &kp N9     &kp N0    &trans
+&kp F1     &kp F2     &kp F3     &kp F4     &kp F5   &kp F6                     &trans       &kp LEFT   &kp DOWN      &kp RIGHT  &trans    &trans
+&kp F7     &kp F8     &kp F9     &kp F10    &kp F11  &kp F12  &trans    &trans  &kp KP_PLUS  &kp MINUS  &kp EQUAL     &kp LBKT   &kp RBKT  &kp BSLH
+                                 &trans     &trans   &trans   &trans    &trans  &trans       &trans     &trans
+            >;
+        };
+
+        layer_3 {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                        &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans
             >;
         };
     };
