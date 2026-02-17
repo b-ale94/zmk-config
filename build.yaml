@@ -46,7 +46,7 @@ include:
     artifact-name: lily58_right
   # 3. Dongle YADS (Central + Schermo)
   - board: xiao_ble
-    shield: totem_dongle dongle_screen
+    shield: splitkb_aurora_lily58_left dongle_screen
     cmake-args: -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=8000
     snippet: zmk-usb-logging
     artifact-name: lily-dongle-screen
