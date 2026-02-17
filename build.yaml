@@ -33,25 +33,25 @@
 #     snippet: zmk-usb-logging
 
 include:
-  # 1. Metà Sinistra (Periferica)
+  # 1. Metà Sinistra (Lily58)
   - board: nice_nano_v2
     shield: splitkb_aurora_lily58_left
     cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
     artifact-name: lily58_left
 
-  # 2. Metà Destra (Periferica)
+  # 2. Metà Destra (Lily58)
   - board: nice_nano_v2
     shield: splitkb_aurora_lily58_right
     cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
     artifact-name: lily58_right
 
-  # 3. Dongle YADS (Central con Schermo)
+  # 3. Dongle YADS (Central + Schermo)
   - board: nice_nano_v2
     shield: yads dongle_screen
     cmake-args: >
-      -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y 
-      -DCONFIG_LVGL=y 
-      -DCONFIG_LV_Z_COLOR_DEPTH_16=y 
-      -DCONFIG_LV_COLOR_16_SWAP=y 
-      -DZMK_EXTRA_MODULES="/__w/zmk-config/zmk-config/config"
+      -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y
+      -DCONFIG_LVGL=y
+      -DCONFIG_LV_Z_COLOR_DEPTH_16=y
+      -DCONFIG_LV_COLOR_16_SWAP=y
+      -DSHIELD_LIST_DIR=/__w/zmk-config/zmk-config/config/boards/shields
     artifact-name: yads_dongle
