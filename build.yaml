@@ -46,7 +46,7 @@ include:
     artifact-name: lily58_right
   # 3. Dongle YADS (Central + Schermo)
   - board: xiao_ble//zmk
-    shield: splitkb_aurora_lily58_left_dongle prospector_adapter
+    shield: splitkb_aurora_lily58_left prospector_adapter
     # cmake-args: >
     snippet: zmk-usb-logging
     artifact-name: lily-dongle-screen
