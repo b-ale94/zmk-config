@@ -16,14 +16,14 @@ manifest:
     - name: zmk
       remote: zmkfirmware
       import: app/west.yml
-      revision: main
+      # revision: main
     # support nice_oled and nice_epaper
     # - name: zmk-nice-oled
     #   remote: mctechnology17
     #   revision: main
     # - name: zmk-dongle-screen
     #   remote: janpfischer
-    #   revision: upgrade-4.1
+    #   revision: main
     - name: prospector-zmk-module # <--- and these
       remote: carrefinho # <---
       revision: feat/new-status-screens
