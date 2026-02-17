@@ -6,8 +6,10 @@ manifest:
       url-base: https://github.com/zmkfirmware
     # - name: mctechnology17
     #   url-base: https://github.com/mctechnology17
-    - name: janpfischer
-      url-base: https://github.com/janpfischer
+    # - name: janpfischer
+    #   url-base: https://github.com/janpfischer
+    - name: carrefinho # <--- add this
+      url-base: https://github.com/carrefinho
     # Additional modules containing boards/shields/custom code can be listed here as well
     # See https://docs.zephyrproject.org/3.2.0/develop/west/manifest.html#projects
   projects:
@@ -19,8 +21,11 @@ manifest:
     # - name: zmk-nice-oled
     #   remote: mctechnology17
     #   revision: main
-    - name: zmk-dongle-screen
-      remote: janpfischer
-      revision: upgrade-4.1
+    # - name: zmk-dongle-screen
+    #   remote: janpfischer
+    #   revision: upgrade-4.1
+    - name: prospector-zmk-module # <--- and these
+      remote: carrefinho # <---
+      revision: feat/new-status-screens
   self:
     path: config
