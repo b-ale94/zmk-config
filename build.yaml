@@ -49,9 +49,9 @@ include:
   - board: nice_nano_v2
     shield: yads dongle_screen
     cmake-args: >
-      -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y
-      -DCONFIG_LVGL=y
-      -DCONFIG_LV_Z_COLOR_DEPTH_16=y
+      -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y 
+      -DCONFIG_LVGL=y 
+      -DCONFIG_LV_Z_COLOR_DEPTH_16=y 
       -DCONFIG_LV_COLOR_16_SWAP=y
-      -DSHIELD_LIST_DIR=/__w/zmk-config/zmk-config/config/boards/shields
+      -DZMK_EXTRA_MODULES=/__w/zmk-config/zmk-config
     artifact-name: yads_dongle
