@@ -44,14 +44,13 @@ include:
     shield: splitkb_aurora_lily58_right
     cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
     artifact-name: lily58_right
-
   # 3. Dongle YADS (Central + Schermo)
-  - board: nice_nano_v2
-    shield: yads dongle_screen
-    cmake-args: >
-      -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y 
-      -DCONFIG_LVGL=y 
-      -DCONFIG_LV_Z_COLOR_DEPTH_16=y 
-      -DCONFIG_LV_COLOR_16_SWAP=y
-      -DSHIELD_DIRS="/__w/zmk-config/zmk-config/config/boards/shields"
-    artifact-name: yads_dongle
+  # - board: nice_nano_v2
+  #   shield: yads dongle_screen
+  #   cmake-args: >
+  #     -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y
+  #     -DCONFIG_LVGL=y
+  #     -DCONFIG_LV_Z_COLOR_DEPTH_16=y
+  #     -DCONFIG_LV_COLOR_16_SWAP=y
+  #     -DSHIELD_DIRS="/__w/zmk-config/zmk-config/config/boards/shields"
+  #   artifact-name: yads_dongle
