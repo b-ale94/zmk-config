@@ -28,5 +28,6 @@ include:
     cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
     artifact-name: split-dongle-right
   - board: nice_nano_v2
-    shield: yads_dongle dongle_screen
-    artifact-name: yads_dongle
+    shield: splitkb_aurora_lily58_left splitkb_aurora_lily58_right dongle_screen
+    cmake-args: -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=8000
+    snippet: zmk-usb-logging
