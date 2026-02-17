@@ -47,12 +47,11 @@ include:
 
   # 3. Dongle YADS (Central con Schermo)
   - board: nice_nano_v2
-    # NOTA: Qui usa 'yads' se hai la cartella yads,
-    # oppure lo shield specifico del dongle che possiedi.
     shield: yads dongle_screen
     cmake-args: >
-      -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y
-      -DCONFIG_LVGL=y
-      -DCONFIG_LV_Z_COLOR_DEPTH_16=y
-      -DCONFIG_LV_COLOR_16_SWAP=y
+      -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y 
+      -DCONFIG_LVGL=y 
+      -DCONFIG_LV_Z_COLOR_DEPTH_16=y 
+      -DCONFIG_LV_COLOR_16_SWAP=y 
+      -DZMK_EXTRA_MODULES="/__w/zmk-config/zmk-config/config"
     artifact-name: yads_dongle
