@@ -46,7 +46,7 @@ include:
     artifact-name: lily58_right
 
   # 3. Dongle YADS (Central con Schermo)
-  - board: nice_nano_v2
-    shield: yads dongle_screen
+- board: nice_nano_v2
+    shield: yads_dongle dongle_screen
     cmake-args: "-DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y -DCONFIG_LV_Z_COLOR_DEPTH_16=y -DCONFIG_LV_COLOR_16_SWAP=y"
     artifact-name: yads_dongle
