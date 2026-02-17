@@ -29,5 +29,5 @@ include:
     artifact-name: split-dongle-right
   - board: nice_nano_v2
     shield: splitkb_aurora_lily58_left splitkb_aurora_lily58_right dongle_screen
-    cmake-args: -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=8000
+    # cmake-args: -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=8000
     snippet: zmk-usb-logging
