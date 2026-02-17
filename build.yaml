@@ -19,15 +19,24 @@
 #
 ---
 include:
+  # 1. Metà Sinistra (Periferica)
   - board: nice_nano_v2
     shield: splitkb_aurora_lily58_left
-    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
-    artifact-name: split-dongle-left
+    cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+    artifact-name: lily58_left
+
+  # 2. Metà Destra (Periferica)
   - board: nice_nano_v2
     shield: splitkb_aurora_lily58_right
-    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
-    artifact-name: split-dongle-right
+    cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+    artifact-name: lily58_right
+
+  # 3. Dongle YADS (Central con Schermo)
   - board: nice_nano_v2
-    shield: splitkb_aurora_lily58_left dongle_screen
-    cmake-args: -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=8000
-    snippet: zmk-usb-logging
+    shield: yads dongle_screen
+    # Qui risolviamo l'errore LVGL aggiungendo i flag direttamente nel build
+    cmake-args: >
+      -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y
+      -DCONFIG_LV_Z_COLOR_DEPTH_16=y
+      -DCONFIG_LV_COLOR_16_SWAP=y
+    artifact-name: yads_dongle
