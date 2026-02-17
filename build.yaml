@@ -45,7 +45,7 @@ include:
     cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
     artifact-name: lily58_right
   # 3. Dongle YADS (Central + Schermo)
-  - board: xiao_ble
+  - board: nice_nano
     shield: splitkb_aurora_lily58_left dongle_screen
     cmake-args: -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=8000
     snippet: zmk-usb-logging
