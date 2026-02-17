@@ -18,16 +18,41 @@
 #     artifact-name: corne_left_with_studio
 #
 ---
+# include:
+#   - board: nice_nano_v2
+#     shield: splitkb_aurora_lily58_left
+#     cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+#     artifact-name: split-dongle-left
+#   - board: nice_nano_v2
+#     shield: splitkb_aurora_lily58_right
+#     cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+#     artifact-name: split-dongle-right
+#   - board: nice_nano_v2
+#     shield: splitkb_aurora_lily58_left splitkb_aurora_lily58_right dongle_screen
+#     # cmake-args: -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=8000
+#     snippet: zmk-usb-logging
+
 include:
+  # 1. Metà Sinistra (Periferica)
   - board: nice_nano_v2
     shield: splitkb_aurora_lily58_left
-    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
-    artifact-name: split-dongle-left
+    cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+    artifact-name: lily58_left
+
+  # 2. Metà Destra (Periferica)
   - board: nice_nano_v2
     shield: splitkb_aurora_lily58_right
-    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
-    artifact-name: split-dongle-right
+    cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+    artifact-name: lily58_right
+
+  # 3. Dongle YADS (Central con Schermo)
   - board: nice_nano_v2
-    shield: splitkb_aurora_lily58_left splitkb_aurora_lily58_right dongle_screen
-    # cmake-args: -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=8000
-    snippet: zmk-usb-logging
+    # NOTA: Qui usa 'yads' se hai la cartella yads,
+    # oppure lo shield specifico del dongle che possiedi.
+    shield: yads dongle_screen
+    cmake-args: >
+      -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y
+      -DCONFIG_LVGL=y
+      -DCONFIG_LV_Z_COLOR_DEPTH_16=y
+      -DCONFIG_LV_COLOR_16_SWAP=y
+    artifact-name: yads_dongle
