@@ -46,7 +46,8 @@ include:
     artifact-name: lily58_right
   # 3. Dongle YADS (Central + Schermo)
   - board: nice_nano_v2
-    shield: splitkb_aurora_lily58_left dongle_screen
+    shield: dongle_screen
+    cmake-args: -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=8000
     #cmake-args: -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=8000 #optional if logging is enabled
     #snippet: zmk-usb-logging #only enable for debugging
     artifact-name: dongle-screen
