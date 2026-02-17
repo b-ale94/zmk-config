@@ -1,0 +1,8 @@
+# config/boards/shields/splitkb_aurora_lily58/splitkb_aurora_lily58.zmk.yml
+file_format: "1"
+id: splitkb_aurora_lily58
+name: SplitKB Aurora Lily58
+type: shield
+siblings:
+  - splitkb_aurora_lily58_left
+  - splitkb_aurora_lily58_right
