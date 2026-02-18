@@ -27,5 +27,6 @@ manifest:
     - name: prospector-zmk-module # <--- and these
       remote: carrefinho # <---
       revision: feat/new-status-screens
+      import: true
   self:
     path: config
