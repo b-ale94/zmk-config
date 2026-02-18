@@ -8,8 +8,8 @@ manifest:
     #   url-base: https://github.com/mctechnology17
     # - name: janpfischer
     #   url-base: https://github.com/janpfischer
-    - name: carrefinho # <--- add this
-      url-base: https://github.com/carrefinho
+    - name: janpfischer
+      url-base: https://github.com/janpfischer
     # Additional modules containing boards/shields/custom code can be listed here as well
     # See https://docs.zephyrproject.org/3.2.0/develop/west/manifest.html#projects
   projects:
@@ -26,7 +26,7 @@ manifest:
     #   revision: main
     - name: prospector-zmk-module # <--- and these
       remote: carrefinho # <---
-      revision: feat/new-status-screens
-      import: true
+      revision: main
+      # import: true
   self:
     path: config
