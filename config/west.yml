@@ -21,12 +21,12 @@ manifest:
     # - name: zmk-nice-oled
     #   remote: mctechnology17
     #   revision: main
-    # - name: zmk-dongle-screen
-    #   remote: janpfischer
-    #   revision: main
-    - name: prospector-zmk-module # <--- and these
-      remote: carrefinho # <---
+    - name: zmk-dongle-screen
+      remote: janpfischer
       revision: main
-      # import: true
+    # - name: prospector-zmk-module # <--- and these
+    #   remote: carrefinho # <---
+    #   revision: feat/new-status-screens
+    # import: true
   self:
     path: config
