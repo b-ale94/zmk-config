@@ -59,8 +59,6 @@ disp_spi: &spi3 {
        reset-gpios = <&gpio0 11 GPIO_ACTIVE_LOW>;
        width = <240>;
        height = <280>;
-       bits-per-pixel = <16>;  /* <--- Add this */
-       inner-byte-swap;
        x-offset = <0>;
        y-offset = <20>;
        vcom = <0x19>;
