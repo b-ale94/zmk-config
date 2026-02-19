@@ -49,7 +49,7 @@ endif
 # Queste configurazioni attivano ZMK Studio e la Shell se non diversamente specificato
 config ZMK_STUDIO
     bool
-    default y
+    default n
 
 config ZMK_SETTINGS_SHELL
     bool
