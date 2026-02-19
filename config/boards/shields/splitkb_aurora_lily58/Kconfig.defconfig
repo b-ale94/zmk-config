@@ -1,16 +1,26 @@
 # Copyright (c) 2022 The ZMK Contributors
 # SPDX-License-Identifier: MIT
 
+# --- CONFIGURAZIONE LATO LEFT ---
 if SHIELD_SPLITKB_AURORA_LILY58_LEFT
 
 config ZMK_KEYBOARD_NAME
-    default "SPLITKB_LILY58"
-    
-config ZMK_SPLIT_ROLE_CENTRAL
-    default y
+    default "Lily58"
+
+# NOTA: Non impostiamo ZMK_SPLIT_ROLE_CENTRAL qui.
+# Sarà il build.yaml a decidere se è 'y' (per BLE) o 'n' (per DONGLE).
 
 endif
 
+# --- CONFIGURAZIONE LATO RIGHT ---
+if SHIELD_SPLITKB_AURORA_LILY58_RIGHT
+
+config ZMK_KEYBOARD_NAME
+    default "Lily58"
+
+endif
+
+# --- CONFIGURAZIONE COMUNE SPLIT ---
 if SHIELD_SPLITKB_AURORA_LILY58_LEFT || SHIELD_SPLITKB_AURORA_LILY58_RIGHT
 
 config ZMK_SPLIT
@@ -18,11 +28,11 @@ config ZMK_SPLIT
 
 endif
 
+# --- CONFIGURAZIONE DONGLE (YADS o STANDARD) ---
 if SHIELD_SPLITKB_AURORA_LILY58_DONGLE
 
-# Max 16 characters in keyboard name
 config ZMK_KEYBOARD_NAME
-   default "Lily58 Dongle"
+    default "Lily58 Dongle"
 
 config ZMK_SPLIT_ROLE_CENTRAL
     default y
@@ -30,21 +40,25 @@ config ZMK_SPLIT_ROLE_CENTRAL
 config ZMK_SPLIT
     default y
 
-# Set this to the number of peripherals your dongle will have.
-# For a unibody, this would be 1. If you have left and right halves, set it to 2, etc.
+# Configurazione specifica per gestire due metà come periferiche
 config ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS
     default 2 
 
-# Set this to ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS + your desired number of BT profiles (default is 5)
+# Supporto per più connessioni (2 metà + profili BT per PC/Tablet)
 config BT_MAX_CONN
     default 6
 
-# Set this to the same number as BT_MAX_CONN
 config BT_MAX_PAIRED
     default 6
 
 endif
 
-# ZMK Studio Support
-CONFIG_ZMK_STUDIO=y
-CONFIG_ZMK_SETTINGS_SHELL=y
+# --- ABILITAZIONI MODULARI ---
+# Queste configurazioni attivano ZMK Studio e la Shell se non diversamente specificato
+config ZMK_STUDIO
+    bool
+    default y
+
+config ZMK_SETTINGS_SHELL
+    bool
+    default y
