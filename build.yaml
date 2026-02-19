@@ -15,16 +15,16 @@ include:
   - board: seeeduino_xiao_ble
     shield: totem_right
     artifact-name: totem-ble-right
-  - board: seeeduino_xiao_ble
+  - board: nice_nano_v2
     shield: totem_dongle dongle_screen
     cmake-args: -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=8000 -DCONFIG_ZMK_STUDIO=y
     snippet: zmk-usb-logging studio-rpc-usb-uart
     artifact-name: totem-dongle-yads
-  - board: seeeduino_xiao_ble
+  - board: nice_nano_v2
     shield: totem_dongle
     cmake-args: -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=8000
     snippet: zmk-usb-logging
     artifact-name: totem-dongle
-  - board: seeeduino_xiao_ble
+  - board: nice_nano_v2
     shield: settings_reset
     artifact-name: totem-settings-reset
