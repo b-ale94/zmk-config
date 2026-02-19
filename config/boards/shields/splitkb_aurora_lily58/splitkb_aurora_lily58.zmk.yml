@@ -1,0 +1,13 @@
+file_format: "1"
+id: splitkb_aurora_lily58
+name: SPLITKB_AURORA_LILY58
+type: shield
+url: https://github.com/zmkfirmware/zmk
+requires: [nice_nano_v2]
+features:
+  - keys
+  - studio
+siblings:
+  - splitkb_aurora_lily58_left
+  - splitkb_aurora_lily58_right
+  - splitkb_aurora_lily58_dongle
