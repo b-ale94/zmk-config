@@ -5,7 +5,7 @@
  */
 
 
-#include "lily58.dtsi"
+#include "splitkb_aurora_lily58.dtsi"
 
 / {
     chosen {
