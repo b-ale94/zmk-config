@@ -1,9 +1,10 @@
 file_format: "1"
 id: splitkb_aurora_lily58
-name: SPLITKB_AURORA_LILY58
+name: splitkb.com Aurora Lily58
 type: shield
-url: https://github.com/zmkfirmware/zmk
-requires: [nice_nano_v2]
+url: https://splitkb.com/products/aurora-lily58-pcb-kit
+requires: [pro_micro]
+exposes: [i2c_oled]
 features:
   - keys
   - studio
