@@ -32,29 +32,29 @@ include:
   - board: nice_nano_v2
     shield: splitkb_aurora_lily58_left
     cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
-    artifact-name: totem-dongle-left
+    artifact-name: splitkb-aurora-lily58-dongle-left
   - board: nice_nano_v2
     shield: splitkb_aurora_lily58_right
     cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
-    artifact-name: totem-dongle-right
+    artifact-name: splitkb-aurora-lily58-dongle-right
   - board: nice_nano_v2
     shield: splitkb_aurora_lily58_left
     cmake-args: -DCONFIG_ZMK_STUDIO=y
     snippet: studio-rpc-usb-uart
-    artifact-name: totem-ble-left
+    artifact-name: splitkb-aurora-lily58-ble-left
   - board: nice_nano_v2
     shield: splitkb_aurora_lily58_right
-    artifact-name: totem-ble-right
+    artifact-name: splitkb-aurora-lily58-ble-right
   - board: nice_nano_v2
     shield: splitkb_aurora_lily58_dongle dongle_screen
     cmake-args: -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=8000 -DCONFIG_ZMK_STUDIO=y
     snippet: zmk-usb-logging studio-rpc-usb-uart
-    artifact-name: totem-dongle-yads
+    artifact-name: splitkb-aurora-lily58-dongle-yads
   - board: nice_nano_v2
     shield: splitkb_aurora_lily58_dongle
     cmake-args: -DCONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS=8000
     snippet: zmk-usb-logging
-    artifact-name: totem-dongle
+    artifact-name: splitkb-aurora-lily58-dongle
   - board: nice_nano_v2
     shield: settings_reset
-    artifact-name: totem-settings-reset
+    artifact-name: splitkb-aurora-lily58-settings-reset
