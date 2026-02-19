@@ -2,15 +2,15 @@
 # SPDX-License-Identifier: MIT
 
 config SHIELD_SPLITKB_AURORA_LILY58_LEFT
-    def_bool $(shields_list_contains,SPLITKB_AURORA_LILY58_left)
+    def_bool $(shields_list_contains,splitkb_aurora_lily58_left)
 
 config SHIELD_SPLITKB_AURORA_LILY58_RIGHT
-    def_bool $(shields_list_contains,SPLITKB_AURORA_LILY58_right)
+    def_bool $(shields_list_contains,splitkb_aurora_lily58_right)
 
 # No whitespace after the comma or in the keyboard name!
 #config SHIELD_SPLITKB_AURORA_LILY58_DONGLE
-#    def_bool $(shields_list_contains,SPLITKB_AURORA_LILY58_dongle_prospector)
+#    def_bool $(shields_list_contains,splitkb_aurora_lily58_dongle_prospector)
 
 # No whitespace after the comma or in the keyboard name!
 config SHIELD_SPLITKB_AURORA_LILY58_DONGLE
-    def_bool $(shields_list_contains,SPLITKB_AURORA_LILY58_dongle)
+    def_bool $(shields_list_contains,splitkb_aurora_lily58_dongle)
