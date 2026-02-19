@@ -4,7 +4,7 @@
 if SHIELD_SPLITKB_AURORA_LILY58_LEFT
 
 config ZMK_KEYBOARD_NAME
-    default "SPLITKB_AURORA_LILY58"
+    default "SPLITKB_LILY58"
     
 config ZMK_SPLIT_ROLE_CENTRAL
     default y
@@ -22,7 +22,7 @@ if SHIELD_SPLITKB_AURORA_LILY58_DONGLE
 
 # Max 16 characters in keyboard name
 config ZMK_KEYBOARD_NAME
-    default "SPLITKB_AURORA_LILY58 DONGLE"
+   default "Lily58 Dongle"
 
 config ZMK_SPLIT_ROLE_CENTRAL
     default y
