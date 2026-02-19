@@ -29,20 +29,20 @@ include:
     shield: settings_reset
     artifact-name: totem-settings-reset
 
-  - board: nice_nano_v2
+  - board: nice_nano
     shield: splitkb_aurora_lily58_left
     cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
     artifact-name: splitkb-aurora-lily58-dongle-left
-  - board: nice_nano_v2
+  - board: nice_nano
     shield: splitkb_aurora_lily58_right
     cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
     artifact-name: splitkb-aurora-lily58-dongle-right
-  - board: nice_nano_v2
+  - board: nice_nano
     shield: splitkb_aurora_lily58_left
     cmake-args: -DCONFIG_ZMK_STUDIO=y
     snippet: studio-rpc-usb-uart
     artifact-name: splitkb-aurora-lily58-ble-left
-  - board: nice_nano_v2
+  - board: nice_nano
     shield: splitkb_aurora_lily58_right
     artifact-name: splitkb-aurora-lily58-ble-right
   - board: nice_nano_v2
