@@ -1,20 +1,12 @@
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="/docs/images/TOTEM_logo_dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="/docs/images/TOTEM_logo_bright.svg">
-  <img alt="TOTEM logo font" src="/docs/images/TOTEM_logo_bright.svg">
-</picture>
-
-# ZMK CONFIG FOR THE TOTEM SPLIT KEYBOARD
-
-[Here](https://github.com/GEIGEIGEIST/totem) you can find the hardware files and build guide.\
-[Here](https://github.com/GEIGEIGEIST/qmk-config-totem) you can find the QMK config for the TOTEM.
-
-TOTEM is a 38 key column-staggered split keyboard running [ZMK](https://zmk.dev/) or [QMK](https://docs.qmk.fm/). It's meant to be used with a SEEED XIAO BLE or RP2040.
 
 
-![TOTEM layout](/docs/images/TOTEM_layout.svg)
+# ZMK CONFIG FOR THE LILY58
 
+This repo is for the SPlitkb lily58 keyboard with nice nano v2 with YADS (yet another dongle screen) configuration.
+The main change between the yads repo and my repo is the usage of the central dongle unit. I couldn't manage to pair my lef side to the dongle as it was configured on the yads repo.
+Ble firmware probably doesn't work correctly since my intend was to make this work donglefully :D
 
+Yads repo: https://github.com/janpfischer/zmk-dongle-screen
 
 ## HOW TO USE
 
