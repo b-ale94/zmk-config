@@ -1,0 +1,649 @@
+version: "3.8"
+
+services:
+  #############################################################################
+  lidarr:
+    container_name: lidarr
+    image: hotio/lidarr:latest
+    restart: unless-stopped
+    networks:
+      - mediaNet
+    logging:
+      driver: json-file
+      options:
+        max-file: ${DOCKERLOGGING_MAXFILE}
+        max-size: ${DOCKERLOGGING_MAXSIZE}
+    labels:
+      - org.hotio.pullio.update=${PULLIO_UPDATE}
+      - org.hotio.pullio.notify=${PULLIO_NOTIFY}
+      - org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}
+    ports:
+      - "8686:8686"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DOCKERCONFDIR}/lidarr:/config
+      - ${DOCKERSTORAGEDIR}:/data
+
+  radarr:
+    container_name: radarr
+    image: ghcr.io/hotio/radarr:latest
+    restart: unless-stopped
+    networks:
+      - mediaNet
+    logging:
+      driver: json-file
+      options:
+        max-file: ${DOCKERLOGGING_MAXFILE}
+        max-size: ${DOCKERLOGGING_MAXSIZE}
+    labels:
+      - org.hotio.pullio.update=${PULLIO_UPDATE}
+      - org.hotio.pullio.notify=${PULLIO_NOTIFY}
+      - org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}
+    ports:
+      - "7878:7878"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DOCKERCONFDIR}/radarr:/config
+      - ${DOCKERSTORAGEDIR}:/data
+
+  sonarr:
+    container_name: sonarr
+    image: ghcr.io/hotio/sonarr:release
+    restart: unless-stopped
+    networks:
+      - mediaNet
+    logging:
+      driver: json-file
+      options:
+        max-file: ${DOCKERLOGGING_MAXFILE}
+        max-size: ${DOCKERLOGGING_MAXSIZE}
+    labels:
+      - org.hotio.pullio.update=${PULLIO_UPDATE}
+      - org.hotio.pullio.notify=${PULLIO_NOTIFY}
+      - org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}
+    ports:
+      - "8989:8989"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DOCKERCONFDIR}/sonarr:/config
+      - ${DOCKERSTORAGEDIR}:/data
+
+  bazarr:
+    container_name: bazarr
+    image: ghcr.io/hotio/bazarr:nightly
+    restart: unless-stopped
+    networks:
+      - mediaNet
+    logging:
+      driver: json-file
+      options:
+        max-file: ${DOCKERLOGGING_MAXFILE}
+        max-size: ${DOCKERLOGGING_MAXSIZE}
+    labels:
+      - org.hotio.pullio.update=${PULLIO_UPDATE}
+      - org.hotio.pullio.notify=${PULLIO_NOTIFY}
+      - org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}
+    ports:
+      - "6767:6767"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DOCKERCONFDIR}/bazarr:/config
+      - ${DOCKERSTORAGEDIR}/media:/data/media
+
+  overseerr:
+    image: lscr.io/linuxserver/overseerr:latest
+    container_name: overseerr
+    networks:
+      - mediaNet
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${DOCKERCONFDIR}/overseerr/config:/config
+    ports:
+      - "5055:5055"
+    restart: unless-stopped
+
+  plex:
+    container_name: plex
+    image: ghcr.io/hotio/plex
+    restart: unless-stopped
+    network_mode: host
+    logging:
+      driver: json-file
+      options:
+        max-file: ${DOCKERLOGGING_MAXFILE}
+        max-size: ${DOCKERLOGGING_MAXSIZE}
+    labels:
+      - org.hotio.pullio.update=${PULLIO_UPDATE}
+      - org.hotio.pullio.notify=${PULLIO_NOTIFY}
+      - org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}
+    ports:
+      - "32400:32400"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+      - PLEX_CLAIM_TOKEN=${PLEX_CLAIM_TOKEN}
+      - PLEX_ADVERTISE_URL=${PLEX_ADVERTISE_URL}
+      - PLEX_NO_AUTH_NETWORKS=
+      - PLEX_BETA_INSTALL=${PLEX_BETA_INSTALL}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DOCKERCONFDIR}/plex:/config:rw
+      - ${DOCKERSTORAGEDIR}/media:/data/media:rw
+
+  qbittorrent:
+    container_name: qbittorrent
+    image: hotio/qbittorrent
+    restart: unless-stopped
+    networks:
+      - mediaNet
+    logging:
+      driver: json-file
+      options:
+        max-file: ${DOCKERLOGGING_MAXFILE}
+        max-size: ${DOCKERLOGGING_MAXSIZE}
+    labels:
+      - org.hotio.pullio.update=${PULLIO_UPDATE}
+      - org.hotio.pullio.notify=${PULLIO_NOTIFY}
+      - org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}
+    ports:
+      - "${QBITTORRENT_WEBUI_PORT}:${QBITTORRENT_WEBUI_PORT}"
+      - "${QBITTORRENT_PRIVOXY_PORT}:${QBITTORRENT_PRIVOXY_PORT}"
+    cap_add:
+      - NET_ADMIN
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv6.conf.all.disable_ipv6=1
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+      - VPN_ENABLED=${VPN_ENABLED}
+      - VPN_FIREWALL_TYPE=legacy
+      - VPN_PROVIDER=${VPN_PROVIDER}
+      - VPN_LAN_NETWORK=${LAN_NETWORK}
+      - VPN_CONF=wg0-fix
+      - VPN_AUTO_PORT_FORWARD=${PORT_FORWARD}
+      - PRIVOXY_ENABLED=${QBITTORRENT_ENABLE_PRIVOXY}
+      - WEBUI_PORTS=${QBITTORRENT_WEBUI_PORT}/tcp,${QBITTORRENT_WEBUI_PORT}/udp
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DOCKERCONFDIR}/qbittorrent:/config:rw
+      - ${DOCKERSTORAGEDIR}/torrents:/data/torrents:rw
+      - ${DOCKERCONFDIR}/qbittorrent/vuetorrent:/vuetorrent:ro
+
+  unpackerr:
+    container_name: unpackerr
+    image: hotio/unpackerr:release
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-file: ${DOCKERLOGGING_MAXFILE}
+        max-size: ${DOCKERLOGGING_MAXSIZE}
+    labels:
+      - org.hotio.pullio.update=${PULLIO_UPDATE}
+      - org.hotio.pullio.notify=${PULLIO_NOTIFY}
+      - org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=002
+      - TZ=${TZ}
+      - UN_SONARR_0_URL=http://sonarr:8989
+      - UN_SONARR_0_API_KEY=cd5d6626ad7b4167a557e4e1c52aec25zzz
+      - UN_SONARR_0_PATHS_0=${DOCKERSTORAGEDIR}/torrents/tv
+      - UN_SONARR_0_PROTOCOLS=torrent
+      - UN_SONARR_0_TIMEOUT=10s
+      - UN_SONARR_0_DELETE_ORIG=false
+      - UN_SONARR_0_DELETE_DELAY=5m
+      - UN_RADARR_0_URL=http://radarr:7878
+      - UN_RADARR_0_API_KEY=be3adb3f19224745a54df76690a4256azzz
+      - UN_RADARR_0_PATHS_0=${DOCKERSTORAGEDIR}/torrents/movies
+      - UN_RADARR_0_PROTOCOLS=torrent
+      - UN_RADARR_0_TIMEOUT=10s
+      - UN_RADARR_0_DELETE_ORIG=false
+      - UN_RADARR_0_DELETE_DELAY=5m
+    volumes:
+      - ${DOCKERCONFDIR}/unpackerr:/config
+      - ${DOCKERSTORAGEDIR}:/data
+    security_opt:
+      - no-new-privileges:true
+
+  prowlarr:
+    container_name: prowlarr
+    image: hotio/prowlarr:testing
+    restart: unless-stopped
+    networks:
+      - mediaNet
+    logging:
+      driver: json-file
+      options:
+        max-file: ${DOCKERLOGGING_MAXFILE}
+        max-size: ${DOCKERLOGGING_MAXSIZE}
+    labels:
+      - org.hotio.pullio.update=${PULLIO_UPDATE}
+      - org.hotio.pullio.notify=${PULLIO_NOTIFY}
+      - org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}
+    ports:
+      - "9696:9696"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+      - ARGS=
+    volumes:
+      - ${DOCKERCONFDIR}/prowlarr:/config:rw
+
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    container_name: audiobookshelf
+    ports:
+      - "13378:80"
+    volumes:
+      - ${DOCKERSTORAGEDIR}/media/audiobooks:/audiobooks
+      - ${DOCKERCONFDIR}/audiobookshelf/metadata:/metadata
+      - ${DOCKERCONFDIR}/audiobookshelf:/config
+    restart: unless-stopped
+
+  flame:
+    image: pawelmalak/flame
+    container_name: flame
+    volumes:
+      - ${DOCKERCONFDIR}/flame:/app/data
+    ports:
+      - "3000:5005"
+    environment:
+      - PASSWORD=
+    restart: unless-stopped
+
+  actual_server:
+    image: actualbudget/actual-server:edge
+    container_name: actual_server
+    ports:
+      - "5006:5006"
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      - ACTUAL_PORT=5006
+    volumes:
+      - ${DOCKERCONFDIR}/actualserver:/data:rw
+    networks:
+      - mediaNet
+    restart: unless-stopped
+
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_INCLUDE_STOPPED=true
+      - WATCHTOWER_REVIVE_STOPPED=false
+      - WATCHTOWER_SCHEDULE=0 0 2 * * *
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+
+  paperless-service-webserver:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    container_name: paperless-ngx_webserver
+    ports:
+      - "8000:8000"
+    volumes:
+      - ${DOCKERCONFDIR}/paperless/data:/usr/src/paperless/data
+      - ${DOCKERCONFDIR}/paperless/media:/usr/src/paperless/media
+      - ${DOCKERCONFDIR}/paperless/consume:/usr/src/paperless/consume
+    environment:
+      - PAPERLESS_DB_HOST=paperless-service-db
+      - PAPERLESS_DB_PORT=3306
+      - PAPERLESS_DB_NAME=paperless
+      - PAPERLESS_DB_USER=paperless
+      - PAPERLESS_DB_PASSWORD=adminadmin
+      - PAPERLESS_REDIS=redis://paperless-service-broker:6379
+      - TZ=Europe/Rome
+    depends_on:
+      - paperless-service-db
+      - paperless-service-broker
+    restart: unless-stopped
+
+  paperless-service-db:
+    image: mariadb:latest
+    container_name: paperless-ngx_mariadb
+    ports:
+      - "3306:3306"
+    volumes:
+      - ${DOCKERCONFDIR}/paperless/mariadb:/var/lib/mysql
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+    environment:
+      - MYSQL_ROOT_PASSWORD=adminadmin
+      - MYSQL_DATABASE=paperless
+      - MYSQL_USER=paperless
+      - MYSQL_PASSWORD=adminadmin
+      - MYSQL_INITDB_ARGS=--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: unless-stopped
+
+  paperless-service-broker:
+    image: redis:latest
+    container_name: paperless-ngx_redis
+    restart: unless-stopped
+
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:v2.8.0
+    container_name: mealie
+    restart: always
+    ports:
+      - "9925:9000"
+    deploy:
+      resources:
+        limits:
+          memory: 1000M
+    volumes:
+      - ${DOCKERCONFDIR}/mealie:/app/data/
+    environment:
+      - ALLOW_SIGNUP=false
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - DB_ENGINE=postgres
+      - POSTGRES_USER=mealie
+      - POSTGRES_PASSWORD=mealie
+      - POSTGRES_SERVER=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=mealie
+    depends_on:
+      mealiepostgres:
+        condition: service_healthy
+
+  mealiepostgres:
+    container_name: postgres
+    image: postgres:15
+    restart: always
+    networks:
+      - mediaNet
+    volumes:
+      - ${DOCKERCONFDIR}/mealiepostgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=mealie
+      - POSTGRES_USER=mealie
+      - PGUSER=mealie
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER} -d postgres -h localhost || exit 1",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  miniflux:
+    image: miniflux/miniflux:latest
+    container_name: miniflux
+    restart: unless-stopped
+    depends_on:
+      - miniflux_db
+    environment:
+      - DATABASE_URL=postgres://admin:adminadmin@miniflux_db/miniflux?sslmode=disable
+      - RUN_MIGRATIONS=1
+      - CREATE_ADMIN=1
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=adminadmin
+      - WALLABAG_URL=http://wallabag:80
+      - WALLABAG_CLIENT_ID=your_wallabag_client_id
+      - WALLABAG_CLIENT_SECRET=ovmpmAWXRCabNlMgzlzFXDYmCFfzGv
+    ports:
+      - "1234:8080"
+
+  miniflux_db:
+    image: postgres:15-alpine
+    container_name: miniflux_db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=adminadmin
+      - POSTGRES_DB=miniflux
+    volumes:
+      - ${DOCKERCONFDIR}/miniflux_db_data:/var/lib/postgresql/data
+
+  glance:
+    container_name: glance
+    image: glanceapp/glance
+    restart: unless-stopped
+    environment:
+      - MY_SECRET_TOKEN=123456
+    volumes:
+      - ${DOCKERCONFDIR}/glance/config:/app/config
+      - ${DOCKERCONFDIR}/glance/assets:/app/assets
+    ports:
+      - "1236:8080"
+
+  booklore:
+    image: booklore/booklore:latest
+    container_name: booklore
+    environment:
+      - USER_ID=${PUID}
+      - GROUP_ID=${PGID}
+      - TZ=${TZ}
+      - DATABASE_URL=jdbc:mariadb://mariadb:3306/booklore
+      - DATABASE_USERNAME=booklore
+      - DATABASE_PASSWORD=your_secure_password
+      - BOOKLORE_PORT=6060
+      - SWAGGER_ENABLED=false
+    depends_on:
+      - mariadb
+    ports:
+      - "6060:6060"
+    volumes:
+      - ${DOCKERCONFDIR}/booklore/booklore/data:/app/data
+      - ${DOCKERSTORAGEDIR}/media/books:/books
+      - ${DOCKERSTORAGEDIR}/torrents/books:/bookdrop
+    restart: unless-stopped
+
+  mariadb:
+    image: lscr.io/linuxserver/mariadb:11.4.5
+    container_name: mariadb
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - MYSQL_ROOT_PASSWORD=super_secure_password
+      - MYSQL_DATABASE=booklore
+      - MYSQL_USER=booklore
+      - MYSQL_PASSWORD=your_secure_password
+    volumes:
+      - ${DOCKERCONFDIR}/booklore/mariadb/config:/config
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  forgejo:
+    image: codeberg.org/forgejo/forgejo:13
+    container_name: forgejo-server
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ}
+      - FORGEJO__database__DB_TYPE=postgres
+      - FORGEJO__database__HOST=forgejoPostgres:5432
+      - FORGEJO__database__NAME=forgejo
+      - FORGEJO__database__USER=forgejo
+      - FORGEJO__database__PASSWD=adminadmin
+    volumes:
+      - ${DOCKERSTORAGEDIR}/media/forgejo:/data
+    ports:
+      - "3205:3000"
+    depends_on:
+      - forgejoPostgres
+
+  forgejoPostgres:
+    image: postgres:17.5@sha256:864831322bf2520e7d03d899b01b542de6de9ece6fe29c89f19dc5e1d5568ccf
+    container_name: forgejo-database
+    restart: always
+    environment:
+      - POSTGRES_DB=forgejo
+      - POSTGRES_USER=forgejo
+      - POSTGRES_PASSWORD=adminadmin
+    volumes:
+      - ${DOCKERCONFDIR}/forgejo/database:/var/lib/postgresql/data
+
+  dind:
+    image: docker:dind
+    container_name: forgejo-dind
+    privileged: true
+    restart: unless-stopped
+    command: ["dockerd", "-H", "tcp://0.0.0.0:2375", "--tls=false"]
+
+  runner:
+    image: code.forgejo.org/forgejo/runner:11
+    container_name: forgejo-runner
+    links:
+      - dind
+    depends_on:
+      - dind
+    user: "1000:1000"
+    environment:
+      - DOCKER_HOST=tcp://dind:2375
+    volumes:
+      - ${DOCKERCONFDIR}/forgejo/runner/data:/data
+      - ${DOCKERCONFDIR}/forgejo/runner/config.yaml:/config.yaml
+    restart: unless-stopped
+    command: /bin/sh -c "sleep 5; forgejo-runner daemon --config /config.yaml"
+
+  authentik-postgresql:
+    image: postgres:16-alpine
+    container_name: authentik-postgresql
+    restart: unless-stopped
+    networks:
+      - mediaNet
+    environment:
+      - POSTGRES_DB=authentik
+      - POSTGRES_USER=authentik
+      - POSTGRES_PASSWORD=${AUTHENTIK_DB_PASSWORD}
+    volumes:
+      - ${DOCKERCONFDIR}/authentik/postgresql:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U authentik -d authentik"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  authentik-redis:
+    image: redis:7-alpine
+    container_name: authentik-redis
+    restart: unless-stopped
+    networks:
+      - mediaNet
+    volumes:
+      - ${DOCKERCONFDIR}/authentik/redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  authentik-server:
+    user: "100:100"
+    image: ghcr.io/goauthentik/server:latest
+    container_name: authentik-server
+    restart: unless-stopped
+    networks:
+      - mediaNet
+    command: server
+    environment:
+      - TZ=${TZ}
+      - AUTHENTIK_REDIS__HOST=authentik-redis
+      - AUTHENTIK_POSTGRESQL__HOST=authentik-postgresql
+      - AUTHENTIK_POSTGRESQL__NAME=authentik
+      - AUTHENTIK_POSTGRESQL__USER=authentik
+      - AUTHENTIK_POSTGRESQL__PASSWORD=${AUTHENTIK_DB_PASSWORD}
+      - AUTHENTIK_SECRET_KEY=${AUTHENTIK_SECRET_KEY}
+    volumes:
+      - ${DOCKERCONFDIR}/authentik/media:/media
+      - ${DOCKERCONFDIR}/authentik/custom-templates:/templates
+    ports:
+      - "9000:9000"
+      - "9443:9443"
+    depends_on:
+      authentik-postgresql:
+        condition: service_healthy
+      authentik-redis:
+        condition: service_healthy
+
+  authentik-worker:
+    user: "100:100"
+    image: ghcr.io/goauthentik/server:latest
+    container_name: authentik-worker
+    restart: unless-stopped
+    networks:
+      - mediaNet
+    command: worker
+    environment:
+      - TZ=${TZ}
+      - AUTHENTIK_REDIS__HOST=authentik-redis
+      - AUTHENTIK_POSTGRESQL__HOST=authentik-postgresql
+      - AUTHENTIK_POSTGRESQL__NAME=authentik
+      - AUTHENTIK_POSTGRESQL__USER=authentik
+      - AUTHENTIK_POSTGRESQL__PASSWORD=${AUTHENTIK_DB_PASSWORD}
+      - AUTHENTIK_SECRET_KEY=${AUTHENTIK_SECRET_KEY}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DOCKERCONFDIR}/authentik/media:/media
+      - ${DOCKERCONFDIR}/authentik/certs:/certs
+      - ${DOCKERCONFDIR}/authentik/custom-templates:/templates
+    depends_on:
+      authentik-postgresql:
+        condition: service_healthy
+      authentik-redis:
+        condition: service_healthy
+
+volumes:
+  config:
+    driver: local
+  work:
+    driver: local
+  budgero_data:
+    driver: local
+
+networks:
+  mediaNet:
+    name: mediaNet
+    driver: bridge
