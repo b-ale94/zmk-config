@@ -203,6 +203,8 @@ services:
     container_name: unpackerr
     image: hotio/unpackerr:release
     restart: unless-stopped
+    networks:
+      - mediaNet
     logging:
       driver: json-file
       options:
@@ -335,8 +337,10 @@ services:
       - PAPERLESS_REDIS=redis://paperless-service-broker:6379
       - TZ=Europe/Rome
     depends_on:
-      - paperless-service-db
-      - paperless-service-broker
+      paperless-service-db:
+        condition: service_healthy
+      paperless-service-broker:
+        condition: service_healthy
     restart: unless-stopped
 
   paperless-service-db:
@@ -355,16 +359,30 @@ services:
       - MYSQL_PASSWORD=adminadmin
       - MYSQL_INITDB_ARGS=--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "root", "-padminadmin"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
 
   paperless-service-broker:
     image: redis:latest
     container_name: paperless-ngx_redis
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
   mealie:
     image: ghcr.io/mealie-recipes/mealie:v2.8.0
     container_name: mealie
     restart: always
+    networks:
+      - mediaNet
     ports:
       - "9925:9000"
     deploy:
@@ -404,7 +422,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "pg_isready -U ${POSTGRES_USER} -d postgres -h localhost || exit 1",
+          "pg_isready -U mealie -d postgres -h localhost || exit 1",
         ]
       interval: 10s
       timeout: 5s
@@ -416,7 +434,8 @@ services:
     container_name: miniflux
     restart: unless-stopped
     depends_on:
-      - miniflux_db
+      miniflux_db:
+        condition: service_healthy
     environment:
       - DATABASE_URL=postgres://admin:adminadmin@miniflux_db/miniflux?sslmode=disable
       - RUN_MIGRATIONS=1
@@ -439,6 +458,12 @@ services:
       - POSTGRES_DB=miniflux
     volumes:
       - ${DOCKERCONFDIR}/miniflux_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d miniflux"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
 
   glance:
     container_name: glance
@@ -465,7 +490,8 @@ services:
       - BOOKLORE_PORT=6060
       - SWAGGER_ENABLED=false
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     ports:
       - "6060:6060"
     volumes:
@@ -510,7 +536,8 @@ services:
     ports:
       - "3205:3000"
     depends_on:
-      - forgejoPostgres
+      forgejoPostgres:
+        condition: service_healthy
 
   forgejoPostgres:
     image: postgres:17.5@sha256:864831322bf2520e7d03d899b01b542de6de9ece6fe29c89f19dc5e1d5568ccf
@@ -522,6 +549,12 @@ services:
       - POSTGRES_PASSWORD=adminadmin
     volumes:
       - ${DOCKERCONFDIR}/forgejo/database:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U forgejo -d forgejo"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
 
   dind:
     image: docker:dind
